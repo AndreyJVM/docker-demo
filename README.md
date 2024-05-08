@@ -1,5 +1,5 @@
 # Docker course
-
+![docker.png](resources/img/docker.png)
 ---
 ### Выводим информацию и клиете и сервере Docker
 ```shell
