@@ -1,11 +1,10 @@
-# Docker course
 ![docker.png](resources/img/docker.png)
 ---
 ### Выводим информацию и клиете и сервере Docker
 ```shell
 docker version
 ```
-![img.png](img.png)
+![img.png](resources/img/Docker_version.png)
 
 ---
 
