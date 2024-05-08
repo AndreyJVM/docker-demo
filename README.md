@@ -4,8 +4,6 @@
 ```shell
 docker version
 ```
-![img.png](resources/img/Docker_version.png)
-
 ---
 
 ### Выводим информацию о запущенных и остановленных контейнерах
