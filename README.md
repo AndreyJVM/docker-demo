@@ -22,3 +22,17 @@ docker images
 docker run <container_name>
 ```
 ---
+### Удаление контейнера
+```shell
+docker rm <container_name or container_id>
+```
+---
+### Переход в интерактивный режим контейнера
+```shell
+docker run -it <container_name>
+```
+### Удаление остановленных контейнеров
+```shell
+docker container prune
+```
+---
