@@ -57,3 +57,25 @@ docker kill <container_name or container_id>
 docker exec -it <container_name or container_id> bash
 ```
 ---
+### Присвоить контейнеру уникальное имя
+```shell
+docker run -d --name <cast_name> <container_name>
+```
+---
+### Меппинг портов
+```shell
+docker run -p <external_port>:<container_port> <container_name>
+docker run -p 8080:80 nginx
+```
+---
+### Меппинг томов
+```shell
+docker run -v <local_path>:<container_path> <container_name>
+docker run -v ${PWD}:/ussr/share/nginx/html -p 8080:80 -d nginx
+```
+---
+### Автоматическое удаление остановелнных контейнеров
+```shell
+docker run --rm <container_name>
+```
+---
