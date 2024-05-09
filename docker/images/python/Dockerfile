@@ -2,6 +2,6 @@ FROM python:alpine
 
 WORKDIR /app
 
-COPY .. .
+COPY . .
 
 CMD [ "python", "main.py"]
