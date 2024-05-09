@@ -1,6 +1,6 @@
 ![docker.png](resources/img/docker.png)
 ---
-### Вывод информации о клиете и сервере Docker
+### Вывод информации о клеите и сервере Docker
 ```shell
 docker version
 ```
@@ -36,7 +36,7 @@ docker run -it <container_name>
 docker container prune
 ```
 ---
-### Запуск контенера в фоновом режиме 
+### Запуск контейнера в фоновом режиме 
 ```shell
 docker run -d <container_name>
 ```
