@@ -41,18 +41,18 @@ docker container prune
 docker run -d <container_name>
 ```
 ---
-### Получение информации о контенере
+### Получение информации о контейнере
 ```shell
 docker container inspect <container_name or container_id>
 ```
 ---
-### Остановка контенера
+### Остановка контейнера
 ```shell
 docker stop <container_name or container_id>
 docker kill <container_name or container_id>
 ```
 ---
-### Подключение к запущенному контенеру
+### Подключение к запущенному контейнеру
 ```shell
 docker exec -it <container_name or container_id> bash
 ```
@@ -74,7 +74,7 @@ docker run -v <local_path>:<container_path> <container_name>
 docker run -v ${PWD}:/ussr/share/nginx/html -p 8080:80 -d nginx
 ```
 ---
-### Автоматическое удаление остановелнных контейнеров
+### Автоматическое удаление остановленных контейнеров
 ```shell
 docker run --rm <container_name>
 ```
