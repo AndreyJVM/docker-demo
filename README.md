@@ -79,3 +79,13 @@ docker run -v ${PWD}:/ussr/share/nginx/html -p 8080:80 -d nginx
 docker run --rm <container_name>
 ```
 ---
+### Перенос строк при написании длинных команд
+```shell
+docker run \
+  --name my_nginx \
+  -v ${PWD}:/home \
+  -p 8080:80 \
+  -d \
+  --rm \
+  nginx
+```
