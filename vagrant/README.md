@@ -14,6 +14,11 @@
 ```
 
 3. **Работа с Vagrant**
+
+```shell
+    mkdir -p ~/vagrant_projects  # Создаём новую папку для проектов
+    cd ~/vagrant_projects        # Переходим в неё
+```
 ```shell
     vagrant init ubuntu/focal64  # Инициализация нового проекта
     vagrant up                   # Запуск виртуальной машины
