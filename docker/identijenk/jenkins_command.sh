@@ -1,29 +1,33 @@
 # Аргументы по умолчанию
-COMPOSE_ARGS=" -f /docker/identijenk/jenkins.yml -p jenkins "
+COMPOSE_ARGS="-f jenkins.yml -p jenkins"
 
 # Останавливаем и чистим все старые контейнеры
-sudo docker-compose $COMPOSE_ARGS stop
-sudo docker-compose $COMPOSE_ARGS rm --force -v
+docker compose $COMPOSE_ARGS stop
+docker compose $COMPOSE_ARGS rm --force -v
 
 # Сборка системы
-sudo docker-compose $COMPOSE_ARGS build --no-cache
-sudo docker-compose $COMPOSE_ARGS up -d
+docker compose $COMPOSE_ARGS build --no-cache
+docker compose $COMPOSE_ARGS up -d
+
+# Ждем запуска контейнеров
+sleep 10
 
 # Модульное тестирование
-sudo docker-compose $COMPOSE_ARGS run --no-deps --rm -e ENV=UNIT identidock ERR=$?
+docker compose $COMPOSE_ARGS run --no-deps --rm -e ENV=UNIT identidock
+ERR=$?
 
 # Выполнение тестирования системы, если модульное тестирование завершилось успешно
 if [ $ERR -eq 0 ]; then
-    IP=$(sudo docker inspect -f {{.NetworkSettings.IPAddress}} jenkins_identidock_1)
-    CODE=$(cutl -sL -w "%{http_code}" $IP:9090/monster/bla -o /dev/null) || true
+    IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' jenkins_identidock_1)
+    CODE=$(curl -sL -w "%{http_code}" "http://$IP:9090/monster/bla" -o /dev/null) || true
     if [ $CODE -ne 200 ]; then
-        echo "Site returned " $CODE
+        echo "Site returned $CODE"
         ERR=1
     fi
 fi
 
 # Останавливаем и чистим контейнеры
-sudo docker-compose $COMPOSE_ARGS stop
-sudo docker-compose $COMPOSE_ARGS rm --force -v
+docker compose $COMPOSE_ARGS stop
+docker compose $COMPOSE_ARGS rm --force -v
 
-return $ERR
+exit $ERR
