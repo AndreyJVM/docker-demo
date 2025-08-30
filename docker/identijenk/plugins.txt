@@ -1,4 +1,4 @@
-scm-api:0.2
-git-client:1.16.1
-git:2.3.5
-greenballs:1.14
+scm-api:latest
+git-client:latest
+git:latest
+greenballs:latest
