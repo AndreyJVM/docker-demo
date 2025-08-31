@@ -7,10 +7,12 @@ RUN apt-get update && apt-get install -y \
     curl \
     gnupg
 
-# Добавление ключа Docker
+# Создание директории для ключей
 RUN install -m 0755 -d /etc/apt/keyrings
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-RUN chmod a+r /etc/apt/keyrings/docker.asc
+
+# Добавление ключа Docker
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
+    chmod a+r /etc/apt/keyrings/docker.asc
 
 # Добавление репозитория Docker для Debian
 RUN echo \
@@ -25,6 +27,9 @@ RUN apt-get update && apt-get install -y \
     containerd.io \
     docker-buildx-plugin \
     docker-compose-plugin
+
+# Добавляем пользователя jenkins в группу docker
+RUN usermod -aG docker jenkins
 
 # Установка плагинов Jenkins
 USER jenkins
