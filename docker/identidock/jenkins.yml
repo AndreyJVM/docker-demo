@@ -1,15 +1,26 @@
-identidock:
-  build: .
-  expose:
-   - "9090"
-  environment:
-    ENV: PROD
-  links:
-   - dnmonster
-   - redis
+services:
+  identidock:
+    build: .
+    ports:
+      - "9090:9090"
+    environment:
+      ENV: PROD
+    depends_on:
+      - dnmonster
+      - redis
+    networks:
+      - identidock-network
 
-dnmonster:
-  image: amouat/dnmonster:1.0
+  dnmonster:
+    image: amouat/dnmonster:1.0
+    networks:
+      - identidock-network
 
-redis:
-  image: redis:3.0
+  redis:
+    image: redis:3.0
+    networks:
+      - identidock-network
+
+networks:
+  identidock-network:
+    driver: bridge
