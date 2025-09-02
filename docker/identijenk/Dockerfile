@@ -30,6 +30,11 @@ RUN apt-get update && apt-get install -y \
 
 # Добавляем пользователя jenkins в группу docker
 RUN usermod -aG docker jenkins
+RUN newgrp docker
+
+# Альтернативно: меняем группу docker.sock на существующую группу jenkins
+RUN chown :jenkins /var/run/docker.sock && \
+    chmod 660 /var/run/docker.sock
 
 # Установка плагинов Jenkins
 USER jenkins

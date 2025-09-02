@@ -25,20 +25,21 @@ ERR=$?
 
 # Выполнение тестирования системы, если модульное тестирование завершилось успешно
 if [ $ERR -eq 0 ]; then
-    echo "Running integration tests..."
-    # Получаем IP контейнера
-    CONTAINER_ID=$(docker compose $COMPOSE_ARGS ps -q identidock)
-    IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $CONTAINER_ID)
-
-    # Тестируем endpoint
-    CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://$IP:9090/monster/bla" || echo "500")
-
-    if [ "$CODE" -ne 200 ]; then
-        echo "Site returned $CODE"
-        ERR=1
-    else
-        echo "Integration test passed - HTTP 200 OK"
-    fi
+  IP=$(docker inspect -f {{.NetworkSettings.IPAddress}} jenkins_identidock_1)
+  CODE=$(curl -sL -w "%{http_code}" $IP:9090/monster/bla -o /dev/null) || true
+  if [ $CODE -eq 200 ]; then
+    echo "Test passed - Tagging"
+    HASH=$(git rev-parse --short HEAD)
+    docker tag -f jenkins_identidock amouat/identidock:$HASH
+    docker tag -f jenkins_identidock amouat/identidock:newest
+    echo "Pushing"
+    docker login -e joe@bloggs.com -u jbloggs -p jbloggs123
+    docker push amouat/identidock:$HASH
+    docker push amouat/identidock:newest
+  else
+    echo "Site returned " $CODE
+    ERR=1
+  fi
 fi
 
 # Останавливаем и чистим контейнеры
